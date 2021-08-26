@@ -1,4 +1,4 @@
-# wp-plugin-boilerplate
+# gravityforms-traffic-source-tracking
 
 > GravityForms integration that fetches the initial traffic source from cookies and passes it along with entries.
 
