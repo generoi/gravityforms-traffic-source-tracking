@@ -15,11 +15,11 @@ Each GF submission entry will contain a meta field telling from which source the
 
 The cookies needed:
 
-    __utmcsr__ : *campaign source*
-    __utmcmd__ : *campaign medium*
-    __utmccn__ : *campaign name*
-    __utmcct__ : *campaign content*
-    __utmctr__ : *campaign term*
+* __utmcsr__ : *campaign source*
+* __utmcmd__ : *campaign medium*
+* __utmccn__ : *campaign name*
+* __utmcct__ : *campaign content*
+* __utmctr__ : *campaign term*
 
 ## Development
 
