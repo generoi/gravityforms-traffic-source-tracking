@@ -3,7 +3,7 @@
 Plugin Name:        Gravity Forms: Initial traffic source tracking
 Plugin URI:         http://genero.fi
 Description:        A WordPress plugin
-Version:            1.1.0
+Version:            1.1.1
 Author:             Genero
 Author URI:         http://genero.fi/
 License:            MIT License
