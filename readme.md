@@ -13,13 +13,10 @@ Each GF submission entry will contain a meta field telling from which source the
 
 ## API
 
-The cookies needed:
+The cookie should be set like this example:
 
-* __utmcsr__ : *campaign source*
-* __utmcmd__ : *campaign medium*
-* __utmccn__ : *campaign name*
-* __utmcct__ : *campaign content*
-* __utmctr__ : *campaign term*
+    Name: __utmzz
+    Value: utmcsr=google|utmcmd=organic|utmccn=(not set)|utmcct=(not set)|utmctr=(not provided)
 
 ## Development
 
