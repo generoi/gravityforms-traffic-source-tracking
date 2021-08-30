@@ -3,7 +3,7 @@
 Plugin Name:        Gravity Forms: Initial traffic source tracking
 Plugin URI:         http://genero.fi
 Description:        A WordPress plugin
-Version:            1.0.0
+Version:            1.1.0
 Author:             Genero
 Author URI:         http://genero.fi/
 License:            MIT License
@@ -49,17 +49,12 @@ add_filter('gform_entry_meta', function ($entry_meta, $form_id) {
 }, 10, 2);
 
 add_action('gform_after_submission', function ($entry, $form) {
-    $cookies = [
-        'utmcsr',
-        'utmcmd',
-        'utmccn',
-        'utmcct',
-        'utmctr'
-    ];
+    $cookie_value = sanitize_text_field($_COOKIE['__utmzz']);
+    $cookie_array = explode('|', $cookie_value);
 
-    foreach ($cookies as $c) {
-        $cookie_value = sanitize_text_field($_COOKIE[$c]);
-        gform_update_meta($entry['id'], $c, $cookie_value);
+    foreach ($cookie_array as $c) {
+        $cookie = explode('=', $c);
+        gform_update_meta($entry['id'], $cookie[0], $cookie[1] ?? '');
     }
 }, 10, 2);
 
