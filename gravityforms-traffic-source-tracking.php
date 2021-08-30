@@ -49,12 +49,22 @@ add_filter('gform_entry_meta', function ($entry_meta, $form_id) {
 }, 10, 2);
 
 add_action('gform_after_submission', function ($entry, $form) {
+    $valid_cookies = [
+        'utmcsr',
+        'utmcmd',
+        'utmccn',
+        'utmcct',
+        'utmctr'
+    ];
+
     $cookie_value = sanitize_text_field($_COOKIE['__utmzz']);
     $cookie_array = explode('|', $cookie_value);
 
     foreach ($cookie_array as $c) {
         $cookie = explode('=', $c);
-        gform_update_meta($entry['id'], $cookie[0], $cookie[1] ?? '');
+        if (in_array($cookie[0], $valid_cookies)) {
+            gform_update_meta($entry['id'], $cookie[0], $cookie[1] ?? '');
+        }
     }
 }, 10, 2);
 
