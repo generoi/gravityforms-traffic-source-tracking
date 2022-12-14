@@ -22,50 +22,35 @@ add_filter('gform_entry_meta', function ($entry_meta, $form_id) {
     $entry_meta['utmcsr'] = array(
         'label' => __('Campaign Source', 'plugins'),
         'is_numeric' => false,
-        'is_default_column' => true
+        'is_default_column' => true,
+        'update_entry_meta_callback' => __NAMESPACE__ . '\\gf_traffic_source_tracking_update_meta',
     );
     $entry_meta['utmcmd'] = array(
         'label' => __('Campaign Medium', 'plugins'),
         'is_numeric' => false,
-        'is_default_column' => true
+        'is_default_column' => true,
+        'update_entry_meta_callback' => __NAMESPACE__ . '\\gf_traffic_source_tracking_update_meta',
     );
     $entry_meta['utmccn'] = array(
         'label' => __('Campaign Name', 'plugins'),
         'is_numeric' => false,
-        'is_default_column' => true
+        'is_default_column' => true,
+        'update_entry_meta_callback' => __NAMESPACE__ . '\\gf_traffic_source_tracking_update_meta',
     );
     $entry_meta['utmcct'] = array(
         'label' => __('Campaign Content', 'plugins'),
         'is_numeric' => false,
-        'is_default_column' => true
+        'is_default_column' => true,
+        'update_entry_meta_callback' => __NAMESPACE__ . '\\gf_traffic_source_tracking_update_meta',
     );
     $entry_meta['utmctr'] = array(
         'label' => __('Campaign Term', 'plugins'),
         'is_numeric' => false,
-        'is_default_column' => true
+        'is_default_column' => true,
+        'update_entry_meta_callback' => __NAMESPACE__ . '\\gf_traffic_source_tracking_update_meta',
     );
 
     return $entry_meta;
-}, 10, 2);
-
-add_action('gform_after_submission', function ($entry, $form) {
-    $valid_cookies = [
-        'utmcsr',
-        'utmcmd',
-        'utmccn',
-        'utmcct',
-        'utmctr'
-    ];
-
-    $cookie_value = sanitize_text_field($_COOKIE['__utmzz']);
-    $cookie_array = explode('|', $cookie_value);
-
-    foreach ($cookie_array as $c) {
-        $cookie = explode('=', $c);
-        if (in_array($cookie[0], $valid_cookies)) {
-            gform_update_meta($entry['id'], $cookie[0], $cookie[1] ?? '');
-        }
-    }
 }, 10, 2);
 
 add_filter('gform_entry_detail_meta_boxes', function ($meta_boxes, $entry, $form) {
@@ -77,6 +62,23 @@ add_filter('gform_entry_detail_meta_boxes', function ($meta_boxes, $entry, $form
 
     return $meta_boxes;
 }, 10, 3);
+
+function gf_traffic_source_tracking_get(string $key) {
+    $cookie_value = sanitize_text_field($_COOKIE['__utmzz']);
+    $cookie_array = explode('|', $cookie_value);
+
+    foreach ($cookie_array as $c) {
+        $cookie = explode('=', $c);
+        if ($cookie[0] === $key) {
+            return $cookie[1] ?? '';
+        }
+    }
+    return '';
+}
+
+function gf_traffic_source_tracking_update_meta(string $key) {
+    return gf_traffic_source_tracking_get($key);
+}
 
 function gf_traffic_source_tracking_metabox($args) {
 
