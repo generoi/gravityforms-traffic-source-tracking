@@ -14,10 +14,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
-    require_once $composer;
-}
-
 add_filter('gform_entry_meta', function ($entry_meta, $form_id) {
     $entry_meta['utmcsr'] = array(
         'label' => __('Campaign Source', 'plugins'),
